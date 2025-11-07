@@ -15,7 +15,7 @@ public class GimnasioViewController implements Initializable {
 
     @FXML private CrudUsuarioViewController studentTabController;
     @FXML private CrudUsuarioViewController workerTabController;
-    @FXML private CrudUsuarioViewController externalTabController;
+    @FXML private CrudUsuarioViewController externalTabContentController;
 
     @FXML private TabPane tabPane;
     @FXML private Tab studentsTab;
@@ -25,6 +25,7 @@ public class GimnasioViewController implements Initializable {
     @FXML private Tab coachManagementTab;
     @FXML private Tab reservationsTab;
     @FXML private Tab reportsTab;
+    @FXML private Tab userManagementTab;
 
     @FXML private SplitPane splitPaneReservas;
 
@@ -35,7 +36,7 @@ public class GimnasioViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         studentTabController.setUserType("Student");
         workerTabController.setUserType("UQ Worker");
-        externalTabController.setUserType("External");
+        externalTabContentController.setUserType("External");
         System.out.println("🏋️ GimnasioViewController inicializado");
     }
 
@@ -46,6 +47,7 @@ public class GimnasioViewController implements Initializable {
                 break;
             case "Receptionist":
                 tabPane.getTabs().remove(coachManagementTab);
+                tabPane.getTabs().remove(userManagementTab);
                 break;
             case "User":
                 tabPane.getTabs().remove(studentsTab);
@@ -54,6 +56,7 @@ public class GimnasioViewController implements Initializable {
                 tabPane.getTabs().remove(accessControlTab);
                 tabPane.getTabs().remove(coachManagementTab);
                 tabPane.getTabs().remove(reportsTab);
+                tabPane.getTabs().remove(userManagementTab);
                 break;
         }
     }

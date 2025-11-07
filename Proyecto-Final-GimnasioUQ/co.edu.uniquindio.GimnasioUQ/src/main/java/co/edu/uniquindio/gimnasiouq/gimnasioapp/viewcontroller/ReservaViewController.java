@@ -181,7 +181,7 @@ public class ReservaViewController implements Initializable {
                 // Crear nueva reserva
                 Reserva reserva = new Reserva(
                         generarCodigoReserva(),
-                        usuario.getNombre(),
+                        usuario,
                         clase.getNombre(),
                         dateFecha.getValue().toString(),
                         txtHora.getText()

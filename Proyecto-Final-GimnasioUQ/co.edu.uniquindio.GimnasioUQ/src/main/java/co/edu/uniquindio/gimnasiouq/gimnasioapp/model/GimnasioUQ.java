@@ -159,6 +159,11 @@ public class GimnasioUQ {
 // ============================================================
 
     public boolean crearReserva(Reserva reserva) {
+        Usuario usuario = reserva.getUsuario();
+        if (usuario.getTipoMembresia() != TipoMembresia.PREMIUM && usuario.getTipoMembresia() != TipoMembresia.VIP) {
+            return false; // Membresía no válida
+        }
+
         Clase clase = buscarClase(reserva.getNombreClase());
         if (clase == null) {
             return false; // Clase no encontrada

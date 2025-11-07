@@ -8,6 +8,8 @@
     <children>
         <Button onAction="#generateActiveUsersReport" layoutX="55.0" layoutY="33.0" prefHeight="26.0" prefWidth="150.0" text="Active Users Report" />
         <Button onAction="#generatePopularClassesReport" layoutX="225.0" layoutY="33.0" prefHeight="26.0" prefWidth="150.0" text="Popular Classes Report" />
+        <Button onAction="#generateMembershipExpiryReport" layoutX="400.0" layoutY="33.0" prefHeight="26.0" prefWidth="150.0" text="Membership Expiry Report" />
+        <Button onAction="#generateMembershipRevenueReport" layoutX="575.0" layoutY="33.0" prefHeight="26.0" prefWidth="180.0" text="Membership Revenue Report" />
         <TextArea fx:id="reportTextArea" layoutX="14.0" layoutY="80.0" prefHeight="478.0" prefWidth="747.0" />
     </children>
 </AnchorPane>

@@ -76,11 +76,14 @@ public class DataUtil {
             gimnasio.getListaClases().add(clase4);
 
             // ==================== CREAR RESERVAS DE PRUEBA ====================
-            Reserva reserva1 = new Reserva("RES001", "Juan Pérez", "Yoga Matutino", "2024-01-15", "08:00");
-            Reserva reserva2 = new Reserva("RES002", "María García", "Spinning Intenso", "2024-01-15", "18:00");
+            usuario1.setTipoMembresia(TipoMembresia.PREMIUM);
+            usuario2.setTipoMembresia(TipoMembresia.VIP);
 
-            gimnasio.getListaReservas().add(reserva1);
-            gimnasio.getListaReservas().add(reserva2);
+            Reserva reserva1 = new Reserva("RES001", usuario1, "Yoga Matutino", "2024-01-15", "08:00");
+            Reserva reserva2 = new Reserva("RES002", usuario2, "Spinning Intenso", "2024-01-15", "18:00");
+
+            gimnasio.crearReserva(reserva1);
+            gimnasio.crearReserva(reserva2);
             saveData(gimnasio);
         }
         return gimnasio;

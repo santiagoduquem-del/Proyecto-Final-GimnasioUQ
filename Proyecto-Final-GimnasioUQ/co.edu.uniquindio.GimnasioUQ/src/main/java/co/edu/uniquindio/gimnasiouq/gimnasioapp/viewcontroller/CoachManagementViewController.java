@@ -20,6 +20,12 @@ public class CoachManagementViewController {
     private TextField idField;
 
     @FXML
+    private TextField specialtyField;
+
+    @FXML
+    private TextField salaryField;
+
+    @FXML
     private TableView<Entrenador> coachTable;
 
     @FXML
@@ -27,6 +33,12 @@ public class CoachManagementViewController {
 
     @FXML
     private TableColumn<Entrenador, String> idColumn;
+
+    @FXML
+    private TableColumn<Entrenador, String> specialtyColumn;
+
+    @FXML
+    private TableColumn<Entrenador, String> salaryColumn;
 
     private EntrenadorController entrenadorController;
     private ObservableList<Entrenador> listaEntrenadores = FXCollections.observableArrayList();
@@ -36,11 +48,21 @@ public class CoachManagementViewController {
         entrenadorController = new EntrenadorController();
         initDataBinding();
         obtenerEntrenadores();
+        coachTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                nameField.setText(newSelection.getNombre());
+                idField.setText(newSelection.getIdentificacion());
+                specialtyField.setText(newSelection.getEspecialidad());
+                salaryField.setText(newSelection.getSueldo());
+            }
+        });
     }
 
     private void initDataBinding() {
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdentificacion()));
+        specialtyColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEspecialidad()));
+        salaryColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSueldo()));
         coachTable.setItems(listaEntrenadores);
     }
 
@@ -50,7 +72,7 @@ public class CoachManagementViewController {
 
     @FXML
     void addCoach(ActionEvent event) {
-        Entrenador entrenador = new Entrenador(nameField.getText(), idField.getText());
+        Entrenador entrenador = new Entrenador(nameField.getText(), salaryField.getText(), specialtyField.getText(), idField.getText());
         if (entrenadorController.crearEntrenador(entrenador)) {
             obtenerEntrenadores();
         }
@@ -62,6 +84,8 @@ public class CoachManagementViewController {
         if (entrenador != null) {
             entrenador.setNombre(nameField.getText());
             entrenador.setIdentificacion(idField.getText());
+            entrenador.setEspecialidad(specialtyField.getText());
+            entrenador.setSueldo(salaryField.getText());
             if (entrenadorController.actualizarEntrenador(entrenador)) {
                 coachTable.refresh();
             }

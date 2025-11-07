@@ -15,6 +15,9 @@ public class AccessControlViewController {
     @FXML
     private Label accessStatusLabel;
 
+    @FXML
+    private javafx.scene.control.TextArea userInfoArea;
+
     private UsuarioController usuarioController;
 
     @FXML
@@ -27,15 +30,26 @@ public class AccessControlViewController {
         String userId = userIdField.getText();
         if (userId.isEmpty()) {
             accessStatusLabel.setText("Please enter a user ID.");
+            userInfoArea.clear();
             return;
         }
 
         Usuario usuario = usuarioController.buscarUsuario(userId);
 
         if (usuario != null) {
-            accessStatusLabel.setText("Access Granted");
+            if (usuario.getMembresia() != null && usuario.getMembresia().getEstado() == co.edu.uniquindio.gimnasiouq.gimnasioapp.model.EstadoMembresia.ACTIVA) {
+                accessStatusLabel.setText("Access Granted");
+                userInfoArea.setText("User: " + usuario.getNombre() + "\n" +
+                        "ID: " + usuario.getIdentificacion() + "\n" +
+                        "Membership: " + usuario.getTipoMembresia() + " - " + usuario.getTipoDeMembresia() + "\n" +
+                        "Expires: " + usuario.getMembresia().getFechaVencimiento());
+            } else {
+                accessStatusLabel.setText("Access Denied - Membership Inactive");
+                userInfoArea.clear();
+            }
         } else {
-            accessStatusLabel.setText("Access Denied");
+            accessStatusLabel.setText("Access Denied - User not found");
+            userInfoArea.clear();
         }
     }
 }

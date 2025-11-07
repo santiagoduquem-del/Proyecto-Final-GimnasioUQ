@@ -109,7 +109,10 @@ public class CrudUsuarioViewController {
     private TextField txtTelefono;
 
     @FXML
-    private ComboBox<TipoMembresiaDuracion> comboMembresia;
+    private ComboBox<TipoMembresiaDuracion> comboDuracionMembresia;
+
+    @FXML
+    private ComboBox<TipoMembresia> comboTipoMembresia;
 
     // ============================================================
     //                  EVENTOS DE BOTONES
@@ -146,14 +149,15 @@ public class CrudUsuarioViewController {
     }
 
     private void initView() {
-        initComboBox();
+        initComboBoxes();
         initDataBinding();
         tableUsuario.setItems(listaUsuarios);
         listenerSelection();
     }
 
-    private void initComboBox() {
-        comboMembresia.getItems().addAll(TipoMembresiaDuracion.values());
+    private void initComboBoxes() {
+        comboDuracionMembresia.getItems().addAll(TipoMembresiaDuracion.values());
+        comboTipoMembresia.getItems().addAll(TipoMembresia.values());
     }
 
     private void initDataBinding() {
@@ -188,7 +192,8 @@ public class CrudUsuarioViewController {
             txtIdentificacion.setText(usuario.getIdentificacion());
             txtEdad.setText(usuario.getEdad());
             txtTelefono.setText(usuario.getTelefono());
-            comboMembresia.setValue(usuario.getTipoDeMembresia());
+            comboDuracionMembresia.setValue(usuario.getTipoDeMembresia());
+            comboTipoMembresia.setValue(usuario.getTipoMembresia());
             if(usuario instanceof Estudiante){
                 txtExtra1.setText(((Estudiante) usuario).getCurso());
                 txtExtra2.setText(((Estudiante) usuario).getPrograma());
@@ -223,12 +228,13 @@ public class CrudUsuarioViewController {
         String identificacion = txtIdentificacion.getText();
         String edad = txtEdad.getText();
         String telefono = txtTelefono.getText();
-        TipoMembresiaDuracion membresia = comboMembresia.getValue();
+        TipoMembresiaDuracion duracionMembresia = comboDuracionMembresia.getValue();
+        TipoMembresia tipoMembresia = comboTipoMembresia.getValue();
         String extra1 = txtExtra1.getText();
         String extra2 = txtExtra2.getText();
 
         // 2. Validar campos
-        if (!validarCampos(nombre, identificacion, edad, telefono, membresia)) {
+        if (!validarCampos(nombre, identificacion, edad, telefono, duracionMembresia, tipoMembresia)) {
             mostrarMensaje("Error", "Datos incompletos", "Por favor complete todos los campos", Alert.AlertType.WARNING);
             return;
         }
@@ -242,18 +248,47 @@ public class CrudUsuarioViewController {
 
         switch (userType) {
             case "Student":
-                nuevoUsuario = new Estudiante(nombre, identificacion, edad, telefono, membresia, extra1, extra2);
+                nuevoUsuario = new Estudiante(nombre, identificacion, edad, telefono, duracionMembresia, tipoMembresia, extra1, extra2);
                 break;
             case "UQ Worker":
-                nuevoUsuario = new Trabajador(nombre, identificacion, edad, telefono, membresia, extra1);
+                nuevoUsuario = new Trabajador(nombre, identificacion, edad, telefono, duracionMembresia, tipoMembresia, extra1);
                 break;
             case "External":
-                nuevoUsuario = new Externo(nombre, identificacion, edad, telefono, membresia, extra1);
+                nuevoUsuario = new Externo(nombre, identificacion, edad, telefono, duracionMembresia, tipoMembresia, extra1);
                 break;
         }
 
 
-        // 5. Guardar usuario
+        // 5. Crear membresía
+        Membresia membresia = null;
+        switch (tipoMembresia) {
+            case BASICA:
+                membresia = new Basica();
+                break;
+            case PREMIUM:
+                membresia = new Premium();
+                break;
+            case VIP:
+                membresia = new VIP();
+                break;
+        }
+        membresia.setTipo(duracionMembresia);
+        membresia.setFechaInicio(java.time.LocalDate.now().toString());
+        membresia.setEstado(EstadoMembresia.ACTIVA);
+        switch (duracionMembresia) {
+            case MENSUAL:
+                membresia.setFechaVencimiento(java.time.LocalDate.now().plusMonths(1).toString());
+                break;
+            case TRIMESTRAL:
+                membresia.setFechaVencimiento(java.time.LocalDate.now().plusMonths(3).toString());
+                break;
+            case ANUAL:
+                membresia.setFechaVencimiento(java.time.LocalDate.now().plusYears(1).toString());
+                break;
+        }
+        nuevoUsuario.setMembresia(membresia);
+
+        // 6. Guardar usuario
         boolean creado = usuarioController.crearUsuario(nuevoUsuario);
 
         if (creado) {
@@ -291,7 +326,8 @@ public class CrudUsuarioViewController {
         usuarioSeleccionado.setIdentificacion(txtIdentificacion.getText());
         usuarioSeleccionado.setEdad(txtEdad.getText());
         usuarioSeleccionado.setTelefono(txtTelefono.getText());
-        usuarioSeleccionado.setTipoDeMembresia(comboMembresia.getValue());
+        usuarioSeleccionado.setTipoDeMembresia(comboDuracionMembresia.getValue());
+        usuarioSeleccionado.setTipoMembresia(comboTipoMembresia.getValue());
         if(usuarioSeleccionado instanceof Estudiante){
             ((Estudiante) usuarioSeleccionado).setCurso(txtExtra1.getText());
             ((Estudiante) usuarioSeleccionado).setPrograma(txtExtra2.getText());
@@ -335,7 +371,8 @@ public class CrudUsuarioViewController {
         txtIdentificacion.clear();
         txtEdad.clear();
         txtTelefono.clear();
-        comboMembresia.setValue(null);
+        comboDuracionMembresia.setValue(null);
+        comboTipoMembresia.setValue(null);
         txtExtra1.clear();
         txtExtra2.clear();
     }
@@ -346,13 +383,14 @@ public class CrudUsuarioViewController {
 
     private boolean validarCampos(String nombre, String identificacion,
                                   String edad, String telefono,
-                                  TipoMembresiaDuracion membresia) {
+                                  TipoMembresiaDuracion duracionMembresia, TipoMembresia tipoMembresia) {
 
         return !(nombre.isEmpty() ||
                 identificacion.isEmpty() ||
                 edad.isEmpty() ||
                 telefono.isEmpty() ||
-                membresia == null);
+                duracionMembresia == null ||
+                tipoMembresia == null);
     }
 
     private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType tipo) {

@@ -16,5 +16,6 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <TextArea fx:id="userInfoArea" layoutX="150.0" layoutY="300.0" prefHeight="150.0" prefWidth="300.0" editable="false" />
    </children>
 </AnchorPane>

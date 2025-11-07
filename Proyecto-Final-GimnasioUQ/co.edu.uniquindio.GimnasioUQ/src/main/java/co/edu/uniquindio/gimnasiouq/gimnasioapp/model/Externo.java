@@ -8,9 +8,9 @@ public class Externo extends Usuario {
     }
 
     public Externo(String nombre, String identificacion, String edad, String telefono,
-                   TipoMembresiaDuracion tipoDeMembresia, String universidadEmpresa) {
+                   TipoMembresiaDuracion tipoDeMembresia, TipoMembresia tipoMembresia, String universidadEmpresa) {
 
-        super(nombre, identificacion, edad, telefono, tipoDeMembresia);
+        super(nombre, identificacion, edad, telefono, tipoDeMembresia, tipoMembresia);
         this.universidadEmpresa = universidadEmpresa;
     }
 

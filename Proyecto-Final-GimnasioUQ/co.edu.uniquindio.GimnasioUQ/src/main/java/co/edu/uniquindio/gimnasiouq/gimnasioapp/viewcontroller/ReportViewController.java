@@ -22,9 +22,27 @@ public class ReportViewController {
         List<Usuario> usuarios = ModelFactory.getInstancia().obtenerUsuarios();
         StringBuilder report = new StringBuilder("Active Users Report:\n\n");
         for (Usuario usuario : usuarios) {
-            report.append("Name: ").append(usuario.getNombre()).append("\n");
-            report.append("ID: ").append(usuario.getIdentificacion()).append("\n");
-            report.append("Membership: ").append(usuario.getTipoDeMembresia()).append("\n\n");
+            if (usuario.getMembresia() != null && usuario.getMembresia().getEstado() == co.edu.uniquindio.gimnasiouq.gimnasioapp.model.EstadoMembresia.ACTIVA) {
+                report.append("Name: ").append(usuario.getNombre()).append("\n");
+                report.append("ID: ").append(usuario.getIdentificacion()).append("\n");
+                report.append("Membership: ").append(usuario.getTipoMembresia()).append(" - ").append(usuario.getTipoDeMembresia()).append("\n");
+                report.append("Expires: ").append(usuario.getMembresia().getFechaVencimiento()).append("\n\n");
+            }
+        }
+        reportTextArea.setText(report.toString());
+    }
+
+    @FXML
+    void generateMembershipExpiryReport(ActionEvent event) {
+        List<Usuario> usuarios = ModelFactory.getInstancia().obtenerUsuarios();
+        StringBuilder report = new StringBuilder("Membership Expiry Report:\n\n");
+        for (Usuario usuario : usuarios) {
+            if (usuario.getMembresia() != null) {
+                report.append("Name: ").append(usuario.getNombre()).append("\n");
+                report.append("ID: ").append(usuario.getIdentificacion()).append("\n");
+                report.append("Membership: ").append(usuario.getTipoMembresia()).append(" - ").append(usuario.getTipoDeMembresia()).append("\n");
+                report.append("Expires: ").append(usuario.getMembresia().getFechaVencimiento()).append("\n\n");
+            }
         }
         reportTextArea.setText(report.toString());
     }
@@ -40,5 +58,17 @@ public class ReportViewController {
                 .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
                 .forEach(entry -> report.append(entry.getKey()).append(": ").append(entry.getValue()).append(" reservations\n"));
         reportTextArea.setText(report.toString());
+    }
+
+    @FXML
+    void generateMembershipRevenueReport(ActionEvent event) {
+        List<Usuario> usuarios = ModelFactory.getInstancia().obtenerUsuarios();
+        double totalRevenue = 0;
+        for (Usuario usuario : usuarios) {
+            if (usuario.getMembresia() != null) {
+                totalRevenue += Double.parseDouble(usuario.getMembresia().getCosto());
+            }
+        }
+        reportTextArea.setText("Total Membership Revenue: $" + totalRevenue);
     }
 }
