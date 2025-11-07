@@ -7,8 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import co.edu.uniquindio.gimnasiouq.gimnasioapp.controller.UsuarioController;
+import co.edu.uniquindio.gimnasiouq.gimnasioapp.factory.ModelFactory;
+import co.edu.uniquindio.gimnasiouq.gimnasioapp.model.Administrador;
+import co.edu.uniquindio.gimnasiouq.gimnasioapp.model.Recepcionista;
 import co.edu.uniquindio.gimnasiouq.gimnasioapp.model.Usuario;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,11 +28,11 @@ public class LoginViewController {
     private PasswordField passwordField;
 
     private String userType;
-    private UsuarioController usuarioController;
+    private ModelFactory modelFactory;
 
     @FXML
     void initialize() {
-        usuarioController = new UsuarioController();
+        modelFactory = ModelFactory.getInstancia();
     }
 
     public void setUserType(String userType) {
@@ -39,14 +42,24 @@ public class LoginViewController {
 
     private boolean isValidLogin(String username, String password) {
         if ("Receptionist".equals(userType)) {
-            return "receptionist".equals(username) && "password".equals(password);
+            Recepcionista recepcionista = modelFactory.obtenerGimnasio().buscarRecepcionista(username);
+            return recepcionista != null && recepcionista.getPassword().equals(password);
         } else if ("Administrator".equals(userType)) {
-            return "admin".equals(username) && "password".equals(password);
+            Administrador administrador = modelFactory.obtenerGimnasio().buscarAdministrador(username);
+            return administrador != null && administrador.getPassword().equals(password);
         } else if ("User".equals(userType)) {
-            Usuario usuario = usuarioController.buscarUsuario(username);
+            Usuario usuario = modelFactory.obtenerGimnasio().buscarUsuario(username);
             return usuario != null && usuario.getIdentificacion().equals(password);
         }
         return false;
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -66,7 +79,7 @@ public class LoginViewController {
                 e.printStackTrace();
             }
         } else {
-            // Show error message
+            showAlert("Login Failed", "Invalid username or password.", Alert.AlertType.ERROR);
         }
     }
 }

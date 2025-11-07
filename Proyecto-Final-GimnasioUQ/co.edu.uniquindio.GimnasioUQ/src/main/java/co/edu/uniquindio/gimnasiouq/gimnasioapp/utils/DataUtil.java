@@ -55,6 +55,15 @@ public class DataUtil {
             gimnasio.getListaUsuarios().add(usuario2);
             gimnasio.getListaUsuarios().add(usuario3);
 
+            // ==================== CREAR CUENTAS POR DEFECTO ====================
+            Administrador admin = new Administrador("admin", "admin");
+            Recepcionista receptionist = new Recepcionista("receptionist", "receptionist");
+            Usuario user = new Externo("user", "user", "20", "3101234567", TipoMembresiaDuracion.ANUAL, "Test");
+
+            gimnasio.getListaAdministradores().add(admin);
+            gimnasio.getListaRecepcionistas().add(receptionist);
+            gimnasio.getListaUsuarios().add(user);
+
             // ==================== CREAR CLASES DE PRUEBA ====================
             Clase clase1 = new Clase("Yoga Matutino", TipoClase.YOGA, "08:00-09:00", "20", null);
             Clase clase2 = new Clase("Spinning Intenso", TipoClase.SPINNING, "18:00-19:00", "15", null);

@@ -95,6 +95,24 @@ public class GimnasioUQ {
         return listaAdministradores;
     }
 
+    public Administrador buscarAdministrador(String username) {
+        for (Administrador a : listaAdministradores) {
+            if (a.getUsername().equals(username)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public Recepcionista buscarRecepcionista(String username) {
+        for (Recepcionista r : listaRecepcionistas) {
+            if (r.getUsername().equals(username)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
 
 
 // CRUD USUARIOS

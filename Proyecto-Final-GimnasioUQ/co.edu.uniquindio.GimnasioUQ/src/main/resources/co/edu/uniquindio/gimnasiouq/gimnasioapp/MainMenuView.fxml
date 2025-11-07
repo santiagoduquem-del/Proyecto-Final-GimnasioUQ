@@ -15,5 +15,6 @@
       <Button layoutX="225.0" layoutY="148.0" mnemonicParsing="false" onAction="#loginReceptionist" prefHeight="35.0" prefWidth="150.0" text="Login as Receptionist" />
       <Button layoutX="225.0" layoutY="200.0" mnemonicParsing="false" onAction="#loginAdministrator" prefHeight="35.0" prefWidth="150.0" text="Login as Administrator" />
       <Button layoutX="225.0" layoutY="252.0" mnemonicParsing="false" onAction="#loginUser" prefHeight="35.0" prefWidth="150.0" text="Login as User" />
+      <Button layoutX="225.0" layoutY="304.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="35.0" prefWidth="150.0" text="Register" />
    </children>
 </AnchorPane>
