@@ -103,6 +103,16 @@ public class GimnasioUQ {
 // ============================================================
 
     public boolean crearReserva(Reserva reserva) {
+        Clase clase = buscarClase(reserva.getNombreClase());
+        if (clase == null) {
+            return false; // Clase no encontrada
+        }
+
+        long count = listaReservas.stream().filter(r -> r.getNombreClase().equals(reserva.getNombreClase())).count();
+        if (count >= Integer.parseInt(clase.getCupoMaximo())) {
+            return false; // Clase llena
+        }
+
         return listaReservas.add(reserva);
     }
 
@@ -118,6 +128,15 @@ public class GimnasioUQ {
         for (Reserva r : listaReservas) {
             if (r.getCodigoReserva().equals(codigoReserva)) {
                 return r;
+            }
+        }
+        return null;
+    }
+
+    public Clase buscarClase(String nombreClase) {
+        for (Clase c : listaClases) {
+            if (c.getNombre().equals(nombreClase)) {
+                return c;
             }
         }
         return null;

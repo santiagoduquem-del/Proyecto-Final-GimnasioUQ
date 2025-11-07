@@ -11,6 +11,10 @@ import java.util.ResourceBundle;
 
 public class GimnasioViewController implements Initializable {
 
+    @FXML private CrudUsuarioViewController studentTabController;
+    @FXML private CrudUsuarioViewController workerTabController;
+    @FXML private CrudUsuarioViewController externalTabController;
+
     @FXML private SplitPane splitPaneReservas;
 
     private ReservaViewController reservaViewController;
@@ -18,6 +22,9 @@ public class GimnasioViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        studentTabController.setUserType("Student");
+        workerTabController.setUserType("UQ Worker");
+        externalTabController.setUserType("External");
         System.out.println("🏋️ GimnasioViewController inicializado");
     }
 

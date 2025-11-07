@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.gimnasiouq.gimnasioapp.viewcontroller.AccessControlViewController">
+   <children>
+      <Label layoutX="150.0" layoutY="150.0" text="User ID:" />
+      <TextField fx:id="userIdField" layoutX="250.0" layoutY="146.0" />
+      <Button layoutX="275.0" layoutY="200.0" mnemonicParsing="false" onAction="#verifyAccess" text="Verify Access" />
+      <Label fx:id="accessStatusLabel" layoutX="275.0" layoutY="250.0" text="">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

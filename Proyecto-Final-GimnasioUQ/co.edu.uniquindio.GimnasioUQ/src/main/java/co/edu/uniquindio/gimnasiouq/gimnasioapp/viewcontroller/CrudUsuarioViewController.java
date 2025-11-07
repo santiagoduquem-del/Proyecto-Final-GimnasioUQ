@@ -1,15 +1,8 @@
 package co.edu.uniquindio.gimnasiouq.gimnasioapp.viewcontroller;
 
-import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
 import co.edu.uniquindio.gimnasiouq.gimnasioapp.controller.UsuarioController;
 import co.edu.uniquindio.gimnasiouq.gimnasioapp.factory.ModelFactory;
-import co.edu.uniquindio.gimnasiouq.gimnasioapp.model.Estudiante;
-import co.edu.uniquindio.gimnasiouq.gimnasioapp.model.Usuario;
-import co.edu.uniquindio.gimnasiouq.gimnasioapp.model.TipoMembresiaDuracion;
-
+import co.edu.uniquindio.gimnasiouq.gimnasioapp.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,12 +10,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
 public class CrudUsuarioViewController {
 
     UsuarioController usuarioController;
     ObservableList<Usuario> listaUsuarios = FXCollections.observableArrayList();
     Usuario usuarioSeleccionado;
+    private String userType;
 
+    public void setUserType(String userType) {
+        this.userType = userType;
+        obtenerUsuarios();
+    }
     @FXML
     private ResourceBundle resources;
 
@@ -111,8 +113,6 @@ public class CrudUsuarioViewController {
     private void initView() {
         initComboBox();
         initDataBinding();
-        obtenerUsuarios();
-        tableUsuario.getItems().clear();
         tableUsuario.setItems(listaUsuarios);
         listenerSelection();
     }
@@ -158,7 +158,16 @@ public class CrudUsuarioViewController {
     }
 
     private void obtenerUsuarios() {
-        listaUsuarios.addAll(usuarioController.obtenerUsuarios());
+        listaUsuarios.clear();
+        for(Usuario usuario : usuarioController.obtenerUsuarios()){
+            if(userType.equals("Student") && usuario instanceof Estudiante){
+                listaUsuarios.add(usuario);
+            } else if(userType.equals("UQ Worker") && usuario instanceof Trabajador){
+                listaUsuarios.add(usuario);
+            } else if(userType.equals("External") && usuario instanceof Externo){
+                listaUsuarios.add(usuario);
+            }
+        }
     }
 
     // ============================================================
@@ -184,7 +193,20 @@ public class CrudUsuarioViewController {
         System.out.println("Usuario a crear: " + nombre + " - " + identificacion);
 
         // 4. Crear usuario
-        Usuario nuevoUsuario = new Estudiante(nombre, identificacion, edad, telefono, membresia, "1", "General");
+        Usuario nuevoUsuario = null;
+
+        switch (userType) {
+            case "Student":
+                nuevoUsuario = new Estudiante(nombre, identificacion, edad, telefono, membresia, "1", "General");
+                break;
+            case "UQ Worker":
+                nuevoUsuario = new Trabajador(nombre, identificacion, edad, telefono, membresia, "Dependencia", "Cargo");
+                break;
+            case "External":
+                nuevoUsuario = new Externo(nombre, identificacion, edad, telefono, membresia, "Direccion", "Ocupacion");
+                break;
+        }
+
 
         // 5. Guardar usuario
         boolean creado = usuarioController.crearUsuario(nuevoUsuario);
