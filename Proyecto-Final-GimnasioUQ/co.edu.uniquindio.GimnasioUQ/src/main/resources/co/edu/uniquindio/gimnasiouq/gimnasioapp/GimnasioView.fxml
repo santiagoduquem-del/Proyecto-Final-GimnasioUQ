@@ -12,7 +12,7 @@
 
     <children>
 
-        <TabPane layoutX="14.0" layoutY="14.0"
+        <TabPane fx:id="tabPane" layoutX="14.0" layoutY="14.0"
                  prefHeight="698.0" prefWidth="873.0"
                  tabClosingPolicy="UNAVAILABLE">
 
@@ -21,7 +21,7 @@
                 <!-- =============================== -->
                 <!--           TAB ESTUDIANTES       -->
                 <!-- =============================== -->
-                <Tab text="Students">
+                <Tab fx:id="studentsTab" text="Students">
                     <content>
                         <AnchorPane>
                             <children>
@@ -40,7 +40,7 @@
                 <!-- =============================== -->
                 <!--           TAB TRABAJADORES      -->
                 <!-- =============================== -->
-                <Tab text="UQ Workers">
+                <Tab fx:id="workersTab" text="UQ Workers">
                     <content>
                         <AnchorPane>
                             <children>
@@ -59,7 +59,7 @@
                 <!-- =============================== -->
                 <!--           TAB EXTERNOS          -->
                 <!-- =============================== -->
-                <Tab text="External">
+                <Tab fx:id="externalTab" text="External">
                     <content>
                         <AnchorPane>
                             <children>
@@ -78,7 +78,7 @@
                 <!-- =============================== -->
                 <!--           TAB ACCESS CONTROL    -->
                 <!-- =============================== -->
-                <Tab text="Access Control">
+                <Tab fx:id="accessControlTab" text="Access Control">
                     <content>
                         <AnchorPane>
                             <children>
@@ -97,7 +97,7 @@
                 <!-- =============================== -->
                 <!--           TAB COACH MANAGEMENT  -->
                 <!-- =============================== -->
-                <Tab text="Coach Management">
+                <Tab fx:id="coachManagementTab" text="Coach Management">
                     <content>
                         <AnchorPane>
                             <children>
@@ -114,9 +114,28 @@
                 </Tab>
 
                 <!-- =============================== -->
+                <!--           TAB REPORTS           -->
+                <!-- =============================== -->
+                <Tab fx:id="reportsTab" text="Reports">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <SplitPane orientation="VERTICAL"
+                                           layoutX="14.0" layoutY="7.0"
+                                           prefHeight="621.0" prefWidth="931.0">
+                                    <items>
+                                        <fx:include source="ReportView.fxml"/>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- =============================== -->
                 <!--           TAB RESERVAS          -->
                 <!-- =============================== -->
-                <Tab text="Reserva de Clases" onSelectionChanged="#onReservaTabSelected">
+                <Tab fx:id="reservationsTab" text="Reserva de Clases" onSelectionChanged="#onReservaTabSelected">
                     <content>
                         <AnchorPane>
                             <children>

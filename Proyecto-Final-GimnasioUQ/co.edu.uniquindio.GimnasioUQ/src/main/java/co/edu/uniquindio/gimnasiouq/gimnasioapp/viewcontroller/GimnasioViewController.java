@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -14,6 +16,15 @@ public class GimnasioViewController implements Initializable {
     @FXML private CrudUsuarioViewController studentTabController;
     @FXML private CrudUsuarioViewController workerTabController;
     @FXML private CrudUsuarioViewController externalTabController;
+
+    @FXML private TabPane tabPane;
+    @FXML private Tab studentsTab;
+    @FXML private Tab workersTab;
+    @FXML private Tab externalTab;
+    @FXML private Tab accessControlTab;
+    @FXML private Tab coachManagementTab;
+    @FXML private Tab reservationsTab;
+    @FXML private Tab reportsTab;
 
     @FXML private SplitPane splitPaneReservas;
 
@@ -26,6 +37,25 @@ public class GimnasioViewController implements Initializable {
         workerTabController.setUserType("UQ Worker");
         externalTabController.setUserType("External");
         System.out.println("🏋️ GimnasioViewController inicializado");
+    }
+
+    public void initializeUserRole(String userType) {
+        switch (userType) {
+            case "Administrator":
+                // Admin sees all
+                break;
+            case "Receptionist":
+                tabPane.getTabs().remove(coachManagementTab);
+                break;
+            case "User":
+                tabPane.getTabs().remove(studentsTab);
+                tabPane.getTabs().remove(workersTab);
+                tabPane.getTabs().remove(externalTab);
+                tabPane.getTabs().remove(accessControlTab);
+                tabPane.getTabs().remove(coachManagementTab);
+                tabPane.getTabs().remove(reportsTab);
+                break;
+        }
     }
 
     @FXML

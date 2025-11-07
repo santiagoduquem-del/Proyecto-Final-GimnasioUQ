@@ -22,10 +22,10 @@ public class DataUtil {
                     TipoMembresiaDuracion.MENSUAL, "5", "Ingeniería");
 
             Usuario usuario2 = new Trabajador("María García", "1002", "30", "3102222222",
-                    TipoMembresiaDuracion.TRIMESTRAL, "Recepcionista", "Cargo");
+                    TipoMembresiaDuracion.TRIMESTRAL, "Recepcionista");
 
             Usuario usuario3 = new Externo("Carlos López", "1003", "28", "3103333333",
-                    TipoMembresiaDuracion.ANUAL, "Empresa ABC", "Ocupacion");
+                    TipoMembresiaDuracion.ANUAL, "Empresa ABC");
 
             gimnasio.getListaUsuarios().add(usuario1);
             gimnasio.getListaUsuarios().add(usuario2);

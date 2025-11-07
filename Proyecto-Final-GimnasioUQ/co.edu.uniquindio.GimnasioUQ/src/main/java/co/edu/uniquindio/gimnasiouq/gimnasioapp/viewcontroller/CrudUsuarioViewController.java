@@ -21,9 +21,44 @@ public class CrudUsuarioViewController {
     Usuario usuarioSeleccionado;
     private String userType;
 
+    @FXML private Label lblExtra1;
+    @FXML private TextField txtExtra1;
+    @FXML private Label lblExtra2;
+    @FXML private TextField txtExtra2;
+
+
     public void setUserType(String userType) {
         this.userType = userType;
         obtenerUsuarios();
+
+        switch (userType) {
+            case "Student":
+                lblExtra1.setText("Curso:");
+                lblExtra2.setText("Programa:");
+                lblExtra1.setVisible(true);
+                txtExtra1.setVisible(true);
+                lblExtra2.setVisible(true);
+                txtExtra2.setVisible(true);
+                lblExtra1.setManaged(true);
+                txtExtra1.setManaged(true);
+                lblExtra2.setManaged(true);
+                txtExtra2.setManaged(true);
+                break;
+            case "UQ Worker":
+                lblExtra1.setText("Dependencia:");
+                lblExtra1.setVisible(true);
+                txtExtra1.setVisible(true);
+                lblExtra1.setManaged(true);
+                txtExtra1.setManaged(true);
+                break;
+            case "External":
+                lblExtra1.setText("Dirección:");
+                lblExtra1.setVisible(true);
+                txtExtra1.setVisible(true);
+                lblExtra1.setManaged(true);
+                txtExtra1.setManaged(true);
+                break;
+        }
     }
     @FXML
     private ResourceBundle resources;
@@ -154,6 +189,14 @@ public class CrudUsuarioViewController {
             txtEdad.setText(usuario.getEdad());
             txtTelefono.setText(usuario.getTelefono());
             comboMembresia.setValue(usuario.getTipoDeMembresia());
+            if(usuario instanceof Estudiante){
+                txtExtra1.setText(((Estudiante) usuario).getCurso());
+                txtExtra2.setText(((Estudiante) usuario).getPrograma());
+            } else if(usuario instanceof Trabajador){
+                txtExtra1.setText(((Trabajador) usuario).getTipoDeCargo());
+            } else if(usuario instanceof Externo){
+                txtExtra1.setText(((Externo) usuario).getUniversidadEmpresa());
+            }
         }
     }
 
@@ -181,6 +224,8 @@ public class CrudUsuarioViewController {
         String edad = txtEdad.getText();
         String telefono = txtTelefono.getText();
         TipoMembresiaDuracion membresia = comboMembresia.getValue();
+        String extra1 = txtExtra1.getText();
+        String extra2 = txtExtra2.getText();
 
         // 2. Validar campos
         if (!validarCampos(nombre, identificacion, edad, telefono, membresia)) {
@@ -197,13 +242,13 @@ public class CrudUsuarioViewController {
 
         switch (userType) {
             case "Student":
-                nuevoUsuario = new Estudiante(nombre, identificacion, edad, telefono, membresia, "1", "General");
+                nuevoUsuario = new Estudiante(nombre, identificacion, edad, telefono, membresia, extra1, extra2);
                 break;
             case "UQ Worker":
-                nuevoUsuario = new Trabajador(nombre, identificacion, edad, telefono, membresia, "Dependencia", "Cargo");
+                nuevoUsuario = new Trabajador(nombre, identificacion, edad, telefono, membresia, extra1);
                 break;
             case "External":
-                nuevoUsuario = new Externo(nombre, identificacion, edad, telefono, membresia, "Direccion", "Ocupacion");
+                nuevoUsuario = new Externo(nombre, identificacion, edad, telefono, membresia, extra1);
                 break;
         }
 
@@ -247,6 +292,14 @@ public class CrudUsuarioViewController {
         usuarioSeleccionado.setEdad(txtEdad.getText());
         usuarioSeleccionado.setTelefono(txtTelefono.getText());
         usuarioSeleccionado.setTipoDeMembresia(comboMembresia.getValue());
+        if(usuarioSeleccionado instanceof Estudiante){
+            ((Estudiante) usuarioSeleccionado).setCurso(txtExtra1.getText());
+            ((Estudiante) usuarioSeleccionado).setPrograma(txtExtra2.getText());
+        } else if(usuarioSeleccionado instanceof Trabajador){
+            ((Trabajador) usuarioSeleccionado).setTipoDeCargo(txtExtra1.getText());
+        } else if(usuarioSeleccionado instanceof Externo){
+            ((Externo) usuarioSeleccionado).setUniversidadEmpresa(txtExtra1.getText());
+        }
 
         // CORREGIDO: Usar el controlador para actualizar
         boolean actualizado = usuarioController.actualizarUsuario(usuarioSeleccionado);
@@ -283,6 +336,8 @@ public class CrudUsuarioViewController {
         txtEdad.clear();
         txtTelefono.clear();
         comboMembresia.setValue(null);
+        txtExtra1.clear();
+        txtExtra2.clear();
     }
 
     // ============================================================

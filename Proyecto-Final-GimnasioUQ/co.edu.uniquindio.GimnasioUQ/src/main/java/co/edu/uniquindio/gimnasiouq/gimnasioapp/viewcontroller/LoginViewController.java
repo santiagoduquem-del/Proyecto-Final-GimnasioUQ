@@ -42,6 +42,8 @@ public class LoginViewController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/gimnasiouq/gimnasioapp/GimnasioView.fxml"));
                 Scene scene = new Scene(loader.load());
+                GimnasioViewController controller = loader.getController();
+                controller.initializeUserRole(userType);
                 Stage stage = (Stage) loginTitle.getScene().getWindow();
                 stage.setScene(scene);
             } catch (IOException e) {
