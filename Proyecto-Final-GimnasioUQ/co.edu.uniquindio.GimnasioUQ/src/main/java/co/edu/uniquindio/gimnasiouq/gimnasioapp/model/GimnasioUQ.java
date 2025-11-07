@@ -1,0 +1,126 @@
+package co.edu.uniquindio.gimnasiouq.gimnasioapp.model;
+
+import java.util.ArrayList;
+
+public class GimnasioUQ {
+
+    private String nombre;
+
+    private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+    private ArrayList<Membresia> listaMembresias = new ArrayList<>();
+    private ArrayList<Clase> listaClases = new ArrayList<>();
+    private ArrayList<Entrenador> listaEntrenadores = new ArrayList<>();
+    private ArrayList<Reserva> listaReservas = new ArrayList<>();
+    private ArrayList<Recepcionista> listaRecepcionistas = new ArrayList<>();
+    private ArrayList<Administrador> listaAdministradores = new ArrayList<>();
+
+    public GimnasioUQ() {
+    }
+
+    public GimnasioUQ(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public ArrayList<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public ArrayList<Membresia> getListaMembresias() {
+        return listaMembresias;
+    }
+
+    public ArrayList<Clase> getListaClases() {
+        return listaClases;
+    }
+
+    public ArrayList<Entrenador> getListaEntrenadores() {
+        return listaEntrenadores;
+    }
+
+    public ArrayList<Reserva> getListaReservas() {
+        return listaReservas;
+    }
+
+    public ArrayList<Recepcionista> getListaRecepcionistas() {
+        return listaRecepcionistas;
+    }
+
+    public ArrayList<Administrador> getListaAdministradores() {
+        return listaAdministradores;
+    }
+
+
+
+// CRUD USUARIOS
+
+
+    public boolean crearUsuario(Usuario usuario) {
+        return listaUsuarios.add(usuario);
+    }
+
+    public Usuario buscarUsuario(String identificacion) {
+        for (Usuario u : listaUsuarios) {
+            if (u.getIdentificacion().equals(identificacion)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public boolean eliminarUsuario(String identificacion) {
+        Usuario u = buscarUsuario(identificacion);
+        if (u != null) {
+            return listaUsuarios.remove(u);
+        }
+        return false;
+    }
+
+    public boolean actualizarUsuario(Usuario usuarioActualizado) {
+        Usuario existente = buscarUsuario(usuarioActualizado.getIdentificacion());
+        if (existente != null) {
+
+            existente.setNombre(usuarioActualizado.getNombre());
+            existente.setEdad(usuarioActualizado.getEdad());
+            existente.setTelefono(usuarioActualizado.getTelefono());
+            existente.setTipoDeMembresia(usuarioActualizado.getTipoDeMembresia());
+
+            return true;
+        }
+        return false;
+    }
+
+
+    // ============================================================
+//                     CRUD RESERVAS
+// ============================================================
+
+    public boolean crearReserva(Reserva reserva) {
+        return listaReservas.add(reserva);
+    }
+
+    public boolean cancelarReserva(String codigoReserva) {
+        Reserva reserva = buscarReserva(codigoReserva);
+        if (reserva != null) {
+            return listaReservas.remove(reserva);
+        }
+        return false;
+    }
+
+    public Reserva buscarReserva(String codigoReserva) {
+        for (Reserva r : listaReservas) {
+            if (r.getCodigoReserva().equals(codigoReserva)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
+}
