@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 public class GimnasioUQ {
 
+    private static final GimnasioUQ instancia = new GimnasioUQ();
+
+    public static GimnasioUQ getInstance() {
+        return instancia;
+    }
+
     private String nombre;
 
     private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
@@ -41,8 +47,40 @@ public class GimnasioUQ {
         return listaClases;
     }
 
-    public ArrayList<Entrenador> getListaEntrenadores() {
+    public ArrayList<Entrenador> getEntrenadores() {
         return listaEntrenadores;
+    }
+
+    public boolean crearEntrenador(Entrenador entrenador) {
+        return listaEntrenadores.add(entrenador);
+    }
+
+    public Entrenador buscarEntrenador(String identificacion) {
+        for (Entrenador e : listaEntrenadores) {
+            if (e.getIdentificacion().equals(identificacion)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public boolean eliminarEntrenador(String identificacion) {
+        Entrenador e = buscarEntrenador(identificacion);
+        if (e != null) {
+            return listaEntrenadores.remove(e);
+        }
+        return false;
+    }
+
+    public boolean actualizarEntrenador(Entrenador entrenadorActualizado) {
+        Entrenador existente = buscarEntrenador(entrenadorActualizado.getIdentificacion());
+        if (existente != null) {
+            existente.setNombre(entrenadorActualizado.getNombre());
+            existente.setSueldo(entrenadorActualizado.getSueldo());
+            existente.setEspecialidad(entrenadorActualizado.getEspecialidad());
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<Reserva> getListaReservas() {

@@ -30,7 +30,7 @@ public class AccessControlViewController {
             return;
         }
 
-        Usuario usuario = usuarioController.obtenerUsuario(userId);
+        Usuario usuario = usuarioController.buscarUsuario(userId);
 
         if (usuario != null) {
             accessStatusLabel.setText("Access Granted");

@@ -8,10 +8,34 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import javafx.scene.control.Alert;
 
 public class DataUtil {
 
     private static final String FILE_PATH = "gimnasio.xml";
+    private static final Logger LOGGER = Logger.getLogger(DataUtil.class.getName());
+
+    static {
+        try {
+            FileHandler fh = new FileHandler("gimnasio_errors.log", true);
+            fh.setFormatter(new SimpleFormatter());
+            LOGGER.addHandler(fh);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Error al configurar el logger", e);
+        }
+    }
+
+    private static void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     public static GimnasioUQ inicializarDatos() {
         GimnasioUQ gimnasio = loadData();
@@ -59,7 +83,8 @@ public class DataUtil {
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
             xstream.toXML(gimnasio, writer);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error al guardar los datos", e);
+            showAlert("Error", "No se pudieron guardar los datos.", Alert.AlertType.ERROR);
         }
     }
 
@@ -74,7 +99,8 @@ public class DataUtil {
         try (FileReader reader = new FileReader(file)) {
             return (GimnasioUQ) xstream.fromXML(reader);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error al cargar los datos", e);
+            showAlert("Error", "No se pudieron cargar los datos.", Alert.AlertType.ERROR);
             return null;
         }
     }

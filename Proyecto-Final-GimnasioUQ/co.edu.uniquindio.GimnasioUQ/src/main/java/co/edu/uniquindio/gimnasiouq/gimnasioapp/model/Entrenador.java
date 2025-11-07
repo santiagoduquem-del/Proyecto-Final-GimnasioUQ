@@ -2,6 +2,7 @@ package co.edu.uniquindio.gimnasiouq.gimnasioapp.model;
 
 public class Entrenador {
 
+    private String nombre;
     private String sueldo;
     private String especialidad;
     private String identificacion;
@@ -9,10 +10,24 @@ public class Entrenador {
     public Entrenador() {
     }
 
-    public Entrenador(String sueldo, String especialidad, String identificacion) {
+    public Entrenador(String nombre, String identificacion) {
+        this.nombre = nombre;
+        this.identificacion = identificacion;
+    }
+
+    public Entrenador(String nombre, String sueldo, String especialidad, String identificacion) {
+        this.nombre = nombre;
         this.sueldo = sueldo;
         this.especialidad = especialidad;
         this.identificacion = identificacion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getSueldo() {

@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import co.edu.uniquindio.gimnasiouq.gimnasioapp.controller.UsuarioController;
+import co.edu.uniquindio.gimnasiouq.gimnasioapp.model.Usuario;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,10 +25,28 @@ public class LoginViewController {
     private PasswordField passwordField;
 
     private String userType;
+    private UsuarioController usuarioController;
+
+    @FXML
+    void initialize() {
+        usuarioController = new UsuarioController();
+    }
 
     public void setUserType(String userType) {
         this.userType = userType;
         loginTitle.setText("Login as " + userType);
+    }
+
+    private boolean isValidLogin(String username, String password) {
+        if ("Receptionist".equals(userType)) {
+            return "receptionist".equals(username) && "password".equals(password);
+        } else if ("Administrator".equals(userType)) {
+            return "admin".equals(username) && "password".equals(password);
+        } else if ("User".equals(userType)) {
+            Usuario usuario = usuarioController.buscarUsuario(username);
+            return usuario != null && usuario.getIdentificacion().equals(password);
+        }
+        return false;
     }
 
     @FXML
@@ -34,11 +54,7 @@ public class LoginViewController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Hardcoded credentials for now
-        if (("receptionist".equals(username) && "password".equals(password) && "Receptionist".equals(userType)) ||
-            ("admin".equals(username) && "password".equals(password) && "Administrator".equals(userType)) ||
-            ("user".equals(username) && "password".equals(password) && "User".equals(userType))) {
-
+        if (isValidLogin(username, password)) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/gimnasiouq/gimnasioapp/GimnasioView.fxml"));
                 Scene scene = new Scene(loader.load());
