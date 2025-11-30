@@ -12,16 +12,16 @@
 
     <children>
 
-        <TabPane layoutX="14.0" layoutY="14.0"
+        <TabPane fx:id="tabPane" layoutX="14.0" layoutY="14.0"
                  prefHeight="698.0" prefWidth="873.0"
                  tabClosingPolicy="UNAVAILABLE">
 
             <tabs>
 
                 <!-- =============================== -->
-                <!--           TAB USUARIOS          -->
+                <!--           TAB ESTUDIANTES       -->
                 <!-- =============================== -->
-                <Tab text="Crud Usuario">
+                <Tab fx:id="studentsTab" text="Students">
                     <content>
                         <AnchorPane>
                             <children>
@@ -29,7 +29,102 @@
                                            layoutX="14.0" layoutY="7.0"
                                            prefHeight="621.0" prefWidth="931.0">
                                     <items>
-                                        <fx:include source="CrudUsuarioView.fxml"/>
+                                        <fx:include fx:id="studentTab" source="CrudUsuarioView.fxml"/>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- =============================== -->
+                <!--           TAB TRABAJADORES      -->
+                <!-- =============================== -->
+                <Tab fx:id="workersTab" text="UQ Workers">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <SplitPane orientation="VERTICAL"
+                                           layoutX="14.0" layoutY="7.0"
+                                           prefHeight="621.0" prefWidth="931.0">
+                                    <items>
+                                        <fx:include fx:id="workerTab" source="CrudUsuarioView.fxml"/>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- =============================== -->
+                <!--           TAB EXTERNOS          -->
+                <!-- =============================== -->
+                <Tab fx:id="externalTab" text="External">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <SplitPane orientation="VERTICAL"
+                                           layoutX="14.0" layoutY="7.0"
+                                           prefHeight="621.0" prefWidth="931.0">
+                                    <items>
+                                        <fx:include fx:id="externalTabContent" source="CrudUsuarioView.fxml"/>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- =============================== -->
+                <!--           TAB ACCESS CONTROL    -->
+                <!-- =============================== -->
+                <Tab fx:id="accessControlTab" text="Access Control">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <SplitPane orientation="VERTICAL"
+                                           layoutX="14.0" layoutY="7.0"
+                                           prefHeight="621.0" prefWidth="931.0">
+                                    <items>
+                                        <fx:include source="AccessControlView.fxml"/>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- =============================== -->
+                <!--           TAB COACH MANAGEMENT  -->
+                <!-- =============================== -->
+                <Tab fx:id="coachManagementTab" text="Coach Management">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <SplitPane orientation="VERTICAL"
+                                           layoutX="14.0" layoutY="7.0"
+                                           prefHeight="621.0" prefWidth="931.0">
+                                    <items>
+                                        <fx:include source="CoachManagementView.fxml"/>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- =============================== -->
+                <!--           TAB REPORTS           -->
+                <!-- =============================== -->
+                <Tab fx:id="reportsTab" text="Reports">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <SplitPane orientation="VERTICAL"
+                                           layoutX="14.0" layoutY="7.0"
+                                           prefHeight="621.0" prefWidth="931.0">
+                                    <items>
+                                        <fx:include source="ReportView.fxml"/>
                                     </items>
                                 </SplitPane>
                             </children>
@@ -40,7 +135,7 @@
                 <!-- =============================== -->
                 <!--           TAB RESERVAS          -->
                 <!-- =============================== -->
-                <Tab text="Reserva de Clases" onSelectionChanged="#onReservaTabSelected">
+                <Tab fx:id="reservationsTab" text="Reserva de Clases" onSelectionChanged="#onReservaTabSelected">
                     <content>
                         <AnchorPane>
                             <children>
@@ -49,6 +144,25 @@
                                            prefHeight="621.0" prefWidth="931.0">
                                     <items>
                                         <fx:include fx:id="reservaContent" source="ReservaView.fxml" />
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- =============================== -->
+                <!--           TAB USER MANAGEMENT   -->
+                <!-- =============================== -->
+                <Tab fx:id="userManagementTab" text="User Management">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <SplitPane orientation="VERTICAL"
+                                           layoutX="14.0" layoutY="7.0"
+                                           prefHeight="621.0" prefWidth="931.0">
+                                    <items>
+                                        <fx:include source="UserManagementView.fxml"/>
                                     </items>
                                 </SplitPane>
                             </children>

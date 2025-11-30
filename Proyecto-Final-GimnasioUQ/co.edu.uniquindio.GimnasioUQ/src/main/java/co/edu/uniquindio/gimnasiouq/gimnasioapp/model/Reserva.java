@@ -3,7 +3,7 @@ package co.edu.uniquindio.gimnasiouq.gimnasioapp.model;
 public class Reserva {
 
     private String codigoReserva;
-    private String nombreUsuario;
+    private Usuario usuario;
     private String nombreClase;
     private String fecha;
     private String hora;
@@ -11,9 +11,9 @@ public class Reserva {
     public Reserva() {
     }
 
-    public Reserva(String codigoReserva, String nombreUsuario, String nombreClase, String fecha, String hora) {
+    public Reserva(String codigoReserva, Usuario usuario, String nombreClase, String fecha, String hora) {
         this.codigoReserva = codigoReserva;
-        this.nombreUsuario = nombreUsuario;
+        this.usuario = usuario;
         this.nombreClase = nombreClase;
         this.fecha = fecha;
         this.hora = hora;
@@ -27,12 +27,16 @@ public class Reserva {
         this.codigoReserva = codigoReserva;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getNombreUsuario() {
+        return usuario.getNombre();
     }
 
     public String getNombreClase() {

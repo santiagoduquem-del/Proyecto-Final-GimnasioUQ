@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 public class GimnasioUQ {
 
+    private static final GimnasioUQ instancia = new GimnasioUQ();
+
+    public static GimnasioUQ getInstance() {
+        return instancia;
+    }
+
     private String nombre;
 
     private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
@@ -41,8 +47,40 @@ public class GimnasioUQ {
         return listaClases;
     }
 
-    public ArrayList<Entrenador> getListaEntrenadores() {
+    public ArrayList<Entrenador> getEntrenadores() {
         return listaEntrenadores;
+    }
+
+    public boolean crearEntrenador(Entrenador entrenador) {
+        return listaEntrenadores.add(entrenador);
+    }
+
+    public Entrenador buscarEntrenador(String identificacion) {
+        for (Entrenador e : listaEntrenadores) {
+            if (e.getIdentificacion().equals(identificacion)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public boolean eliminarEntrenador(String identificacion) {
+        Entrenador e = buscarEntrenador(identificacion);
+        if (e != null) {
+            return listaEntrenadores.remove(e);
+        }
+        return false;
+    }
+
+    public boolean actualizarEntrenador(Entrenador entrenadorActualizado) {
+        Entrenador existente = buscarEntrenador(entrenadorActualizado.getIdentificacion());
+        if (existente != null) {
+            existente.setNombre(entrenadorActualizado.getNombre());
+            existente.setSueldo(entrenadorActualizado.getSueldo());
+            existente.setEspecialidad(entrenadorActualizado.getEspecialidad());
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<Reserva> getListaReservas() {
@@ -55,6 +93,24 @@ public class GimnasioUQ {
 
     public ArrayList<Administrador> getListaAdministradores() {
         return listaAdministradores;
+    }
+
+    public Administrador buscarAdministrador(String username) {
+        for (Administrador a : listaAdministradores) {
+            if (a.getUsername().equals(username)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public Recepcionista buscarRecepcionista(String username) {
+        for (Recepcionista r : listaRecepcionistas) {
+            if (r.getUsername().equals(username)) {
+                return r;
+            }
+        }
+        return null;
     }
 
 
@@ -103,6 +159,21 @@ public class GimnasioUQ {
 // ============================================================
 
     public boolean crearReserva(Reserva reserva) {
+        Usuario usuario = reserva.getUsuario();
+        if (usuario.getTipoMembresia() != TipoMembresia.PREMIUM && usuario.getTipoMembresia() != TipoMembresia.VIP) {
+            return false; // Membresía no válida
+        }
+
+        Clase clase = buscarClase(reserva.getNombreClase());
+        if (clase == null) {
+            return false; // Clase no encontrada
+        }
+
+        long count = listaReservas.stream().filter(r -> r.getNombreClase().equals(reserva.getNombreClase())).count();
+        if (count >= Integer.parseInt(clase.getCupoMaximo())) {
+            return false; // Clase llena
+        }
+
         return listaReservas.add(reserva);
     }
 
@@ -118,6 +189,15 @@ public class GimnasioUQ {
         for (Reserva r : listaReservas) {
             if (r.getCodigoReserva().equals(codigoReserva)) {
                 return r;
+            }
+        }
+        return null;
+    }
+
+    public Clase buscarClase(String nombreClase) {
+        for (Clase c : listaClases) {
+            if (c.getNombre().equals(nombreClase)) {
+                return c;
             }
         }
         return null;

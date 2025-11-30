@@ -1,41 +1,27 @@
 package co.edu.uniquindio.gimnasiouq.gimnasioapp.model;
 
 public class Recepcionista {
+    private String username;
+    private String password;
 
-    private String nombre;
-    private String identificacion;
-    private String correo;
-
-    public Recepcionista() {
+    public Recepcionista(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public Recepcionista(String nombre, String identificacion, String correo) {
-        this.nombre = nombre;
-        this.identificacion = identificacion;
-        this.correo = correo;
+    public String getUsername() {
+        return username;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getPassword() {
+        return password;
     }
 
-    public String getIdentificacion() {
-        return identificacion;
-    }
-
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

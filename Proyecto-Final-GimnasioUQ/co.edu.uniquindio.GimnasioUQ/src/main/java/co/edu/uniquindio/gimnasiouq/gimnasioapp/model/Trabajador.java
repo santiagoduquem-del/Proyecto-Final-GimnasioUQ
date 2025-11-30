@@ -8,9 +8,9 @@ public class Trabajador extends Usuario {
     }
 
     public Trabajador(String nombre, String identificacion, String edad, String telefono,
-                      TipoMembresiaDuracion tipoDeMembresia, String tipoDeCargo) {
+                      TipoMembresiaDuracion tipoDeMembresia, TipoMembresia tipoMembresia, String tipoDeCargo) {
 
-        super(nombre, identificacion, edad, telefono, tipoDeMembresia);
+        super(nombre, identificacion, edad, telefono, tipoDeMembresia, tipoMembresia);
         this.tipoDeCargo = tipoDeCargo;
     }
 

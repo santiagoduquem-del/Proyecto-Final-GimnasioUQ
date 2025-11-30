@@ -58,6 +58,10 @@ public class ModelFactory {
         gimnasio = DataUtil.inicializarDatos();
     }
 
+    public GimnasioUQ obtenerGimnasio() {
+        return gimnasio;
+    }
+
     // ============================================================
     //                     CRUD USUARIOS
     // ============================================================

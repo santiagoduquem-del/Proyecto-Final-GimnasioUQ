@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.gimnasiouq.gimnasioapp.viewcontroller.RegistrationViewController">
+    <children>
+        <Text layoutX="225.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Registration">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Text>
+        <TextField fx:id="nameField" layoutX="225.0" layoutY="100.0" promptText="Name" />
+        <TextField fx:id="idField" layoutX="225.0" layoutY="140.0" promptText="ID" />
+        <TextField fx:id="ageField" layoutX="225.0" layoutY="180.0" promptText="Age" />
+        <TextField fx:id="phoneField" layoutX="225.0" layoutY="220.0" promptText="Phone" />
+        <ComboBox fx:id="membershipTypeBox" layoutX="225.0" layoutY="260.0" prefWidth="150.0" promptText="Membership Type" />
+        <Button layoutX="225.0" layoutY="320.0" mnemonicParsing="false" onAction="#register" prefHeight="35.0" prefWidth="150.0" text="Register" />
+        <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#back" text="Back" />
+    </children>
+</AnchorPane>

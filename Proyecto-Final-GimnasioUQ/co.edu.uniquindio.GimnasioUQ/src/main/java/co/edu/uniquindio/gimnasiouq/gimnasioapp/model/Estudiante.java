@@ -9,9 +9,9 @@ public class Estudiante extends Usuario {
     }
 
     public Estudiante(String nombre, String identificacion, String edad, String telefono,
-                      TipoMembresiaDuracion tipoDeMembresia, String curso, String programa) {
+                      TipoMembresiaDuracion tipoDeMembresia, TipoMembresia tipoMembresia, String curso, String programa) {
 
-        super(nombre, identificacion, edad, telefono, tipoDeMembresia);
+        super(nombre, identificacion, edad, telefono, tipoDeMembresia, tipoMembresia);
         this.curso = curso;
         this.programa = programa;
     }

@@ -7,17 +7,20 @@ public abstract class Usuario {
     private String edad;
     private String telefono;
     private TipoMembresiaDuracion tipoDeMembresia;
+    private TipoMembresia tipoMembresia;
+    private Membresia membresia;
 
     public Usuario() {
     }
 
     public Usuario(String nombre, String identificacion, String edad, String telefono,
-                   TipoMembresiaDuracion tipoDeMembresia) {
+                   TipoMembresiaDuracion tipoDeMembresia, TipoMembresia tipoMembresia) {
         this.nombre = nombre;
         this.identificacion = identificacion;
         this.edad = edad;
         this.telefono = telefono;
         this.tipoDeMembresia = tipoDeMembresia;
+        this.tipoMembresia = tipoMembresia;
     }
 
     public String getNombre() {
@@ -58,5 +61,21 @@ public abstract class Usuario {
 
     public void setTipoDeMembresia(TipoMembresiaDuracion tipoDeMembresia) {
         this.tipoDeMembresia = tipoDeMembresia;
+    }
+
+    public TipoMembresia getTipoMembresia() {
+        return tipoMembresia;
+    }
+
+    public void setTipoMembresia(TipoMembresia tipoMembresia) {
+        this.tipoMembresia = tipoMembresia;
+    }
+
+    public Membresia getMembresia() {
+        return membresia;
+    }
+
+    public void setMembresia(Membresia membresia) {
+        this.membresia = membresia;
     }
 }
